@@ -4,12 +4,31 @@ import Button from "../../../component/shared/Button/Button";
 import Card from "../../../component/shared/Card/Card";
 import styles from './StepOtp.module.css'
 // import { useState } from "react";
+import { verifyOtp } from "../../../http";
+import {useSelector} from 'react-redux';
+import { setAuth } from "../../../store/authSlice";
+import { useDispatch } from "react-redux";
 
- const StepOtp = ({ onNext }) => {
+ const StepOtp = () => {
 
   const [otp, setotp] = useState('');
 
-  function next () {}
+  const dispatch = useDispatch();
+  
+  const {phone , hash} = useSelector((state) => state.auth.otp)
+
+  async function submit () {
+       try{
+      const {data} =   await verifyOtp({otp, phone , hash});
+     
+      dispatch(setAuth(data));
+   
+       }catch(err){
+        console.log(err);
+       }
+    
+
+  }
 
   return (
     <>
@@ -21,7 +40,7 @@ import styles from './StepOtp.module.css'
 
           <div>
             <div className={styles.actionButtonWrap}>
-              <Button onClick={next} text="Next" />
+              <Button onClick={submit} text="Next" />
             </div>
             <p className={styles.BottomParagraph}>
               By entering your number. you're agreeing to our terms of service

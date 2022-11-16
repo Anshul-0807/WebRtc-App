@@ -4,18 +4,20 @@ import Button from "../../../../component/shared/Button/Button";
 import TextInput from "../../../../component/shared/TextInput/TextInput";
 import styles from "../StepPhoneEmail.module.css";
 import { sendOtp } from "../../../../http";
-
+import { useDispatch } from 'react-redux'; 
+import { setOtp } from "../../../../store/authSlice";
 
 const Phone = ({onNext}) => {
   const [phoneNumber, setphoneNumber] = useState("");
+  const dispatch = useDispatch();
 
   async function submit() {
      //send request 
 
-      const res = await sendOtp({phone : phoneNumber });
-      console.log(res);
-      
-        // onNext();
+      const {data} = await sendOtp({phone : phoneNumber });
+      console.log(data);
+      dispatch(setOtp({phone : data.phone ,hash: data.hash}));
+        onNext();
        }
 
   return (
@@ -28,7 +30,7 @@ const Phone = ({onNext}) => {
       <div>
         <div className={styles.actionButtonWrap}>
           <Button text="Next" onClick={submit }/>
-        </div>
+        </div> 
         <p className={styles.BottomParagraph}>
           By entering your number. you're agreeing to our terms of service and
           private policy. Thanks.

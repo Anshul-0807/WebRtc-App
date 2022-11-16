@@ -10,17 +10,27 @@ const DbConnect = require('./database');
 
 const cors = require('cors');
 
+const cookieparser = require('cookie-parser');
+
+
+
+app.use(cookieparser());
+
 const corsOption = {
+
+    credentials: true,
 
     origin : ['http://localhost:3000'],
 }
 app.use(cors(corsOption))
 
+app.use('/storage', express.static('storage'));
+
 const PORT = process.env.PORT || 5500;
 
 DbConnect();
 
-app.use(express.json());
+app.use(express.json({limit: '8mb'}));
 
 app.use(router);
 

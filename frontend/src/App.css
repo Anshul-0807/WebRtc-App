@@ -143,3 +143,9 @@ body{
     margin: 0 auto;
 }
 
+.cardWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 140px);
+}
