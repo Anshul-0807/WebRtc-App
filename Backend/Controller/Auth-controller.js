@@ -129,7 +129,7 @@ class Authcontroller {
 
     }
     // generate new tokens
-      const { refreshToken,accessToken } = tokenService.generateTokens({
+      const { refreshToken, accessToken } = tokenService.generateTokens({
         _id: userData._id,
       });
 
