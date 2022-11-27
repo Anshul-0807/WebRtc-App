@@ -113,11 +113,12 @@ class Authcontroller {
       userData._id,
       refreshTokenFromCookie
     );
+    
     if(!token){
       return res.status(401).json({message: 'Invalid Token'});
-
+ 
     }
-    
+     
     } catch (err){
      return res.status(500).json({message: 'Internal error'});
     }

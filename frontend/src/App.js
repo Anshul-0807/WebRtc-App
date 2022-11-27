@@ -18,10 +18,16 @@ import Activate from "./pages/Activate/Activate";
 import Rooms from "./pages/Rooms/Rooms";
 
 import { useSelector } from "react-redux";
-
+import { useLoadingWithRefresh } from "./hooks/useLoadingWithRefresh";
 
 function App() {
-  return (
+  // Call end point
+
+  const { loading } = useLoadingWithRefresh();
+
+  return loading ? (
+    "loading....."
+  ) : (
     // <div  className='App'>
 
     //   this is our project........
@@ -46,14 +52,13 @@ function App() {
         <ProtectedRoutes path="/rooms">
           <Rooms />
         </ProtectedRoutes>
-
       </Switch>
     </BrowserRouter>
   );
 }
 
 const GuestRoute = ({ children, ...rest }) => {
- const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth } = useSelector((state) => state.auth);
   return (
     <Route
       {...rest}
@@ -73,8 +78,8 @@ const GuestRoute = ({ children, ...rest }) => {
   );
 };
 
-const SemiProtectedRoutes = ({children , ...rest}) => {
-  const {user, isAuth } = useSelector((state) => state.auth);
+const SemiProtectedRoutes = ({ children, ...rest }) => {
+  const { user, isAuth } = useSelector((state) => state.auth);
   return (
     <Route
       {...rest}
@@ -101,8 +106,8 @@ const SemiProtectedRoutes = ({children , ...rest}) => {
   );
 };
 
-const ProtectedRoutes = ({children , ...rest}) => {
-  const {user, isAuth } = useSelector((state) => state.auth);
+const ProtectedRoutes = ({ children, ...rest }) => {
+  const { user, isAuth } = useSelector((state) => state.auth);
   return (
     <Route
       {...rest}
@@ -122,7 +127,7 @@ const ProtectedRoutes = ({children , ...rest}) => {
             }}
           />
         ) : (
-         children 
+          children
         );
       }}
     ></Route>
@@ -130,4 +135,3 @@ const ProtectedRoutes = ({children , ...rest}) => {
 };
 
 export default App;
- 
