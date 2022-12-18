@@ -103,7 +103,7 @@ class Authcontroller {
     // check if token is valid
     let userData;
     try{
-      userData = await tokenService.verifyAccessToken(refreshTokenFromCookie);
+      userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
     }catch(err) {
       return res.status(401).json({message: 'Invalid Token'})
     }
@@ -156,7 +156,17 @@ class Authcontroller {
 
   res.json({ user: userDto, auth: true });
   }
-    
+
+    async logout(req, res){
+      
+      const {refreshToken} = req.cookies;
+      // delete refresh token from cookie
+         await  tokenService.removeToken(refreshToken);
+      // delete cookies
+      res.clearCookie('refreshToken');
+      res.clearCookie('accessToken');
+      res.json({ user: null, auth: false})
+    }
 
 
   }

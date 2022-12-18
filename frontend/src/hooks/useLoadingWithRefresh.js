@@ -12,7 +12,7 @@ export function useLoadingWithRefresh() {
       try {
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/refresh`,
-          {
+           {
             withCredentials: true,
           }
         );
@@ -23,6 +23,6 @@ export function useLoadingWithRefresh() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, []); 
   return { loading };
 }

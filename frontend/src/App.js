@@ -19,14 +19,16 @@ import Rooms from "./pages/Rooms/Rooms";
 
 import { useSelector } from "react-redux";
 import { useLoadingWithRefresh } from "./hooks/useLoadingWithRefresh";
+import { Loader } from "./component/shared/Loader/Loader";
+
 
 function App() {
-  // Call end point
-
+  // Call refresh end point
+ 
   const { loading } = useLoadingWithRefresh();
 
   return loading ? (
-    "loading....."
+    <Loader message="Loading, please wait.."/>
   ) : (
     // <div  className='App'>
 
