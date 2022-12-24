@@ -4,6 +4,8 @@ import TextInput from "../shared/TextInput/TextInput";
 
 const AddRoomModal = ({ onClose }) => {
   const [roomType, setRoomType] = useState("open");
+  const [topic, setTopic] = useState('');
+
   return (
     <div className={styles.modalMask}>
       <div className={styles.modalBody}>
@@ -12,26 +14,37 @@ const AddRoomModal = ({ onClose }) => {
         </button>
         <div className={styles.modalHeader}>
           <h3 className={styles.heading}>Enter the topic to be discussed</h3>
-          <TextInput fullwidth="true" />
+          <TextInput
+            fullwidth="true"
+            value={topic}
+            onChange ={(e) => setTopic(e.target.value)}
+          />
           <h2 className={styles.subHeading}>Room types</h2>
           <div className={styles.roomTypes}>
             <div
+              onClick={() => setRoomType("open")}
               className={`${styles.typeBox} ${
-                roomType === 'open' ? styles.active : ""
+                roomType === "open" ? styles.active : ""
               }`}
             >
               <img src="/imags/Globe.png" alt="Globe" />
               <span>Open</span>
             </div>
-            <div className={`${styles.typeBox} ${
-                roomType === 'Social' ? styles.active : ""
-              }`}>
+            <div
+              onClick={() => setRoomType("Social")}
+              className={`${styles.typeBox} ${
+                roomType === "Social" ? styles.active : ""
+              }`}
+            >
               <img src="/imags/Users.png" alt="social" />
               <span>Social</span>
             </div>
-            <div className={`${styles.typeBox} ${
-                roomType === 'Private' ? styles.active : ""
-              }`}>
+            <div
+              onClick={() => setRoomType("Private")}
+              className={`${styles.typeBox} ${
+                roomType === "Private" ? styles.active : ""
+              }`}
+            >
               <img src="/imags/newLock.png" alt="lock" />
               <span>Private</span>
             </div>
