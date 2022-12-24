@@ -7,13 +7,13 @@ const RoomCard = ({ room }) => {
       <div className={styles.speakers}>
       <div className={styles.avatars}>
         {room.speakers.map((speaker) => (
-            <img src={speaker.avatar} alt="speaker-avatar" />
+            <img key={speaker.id} src={speaker.avatar} alt="speaker-avatar" />
         ))}
 
       </div>
       <div className={styles.names}>
       {room.speakers.map((speaker) => (
-        <div className={styles.nameWrapper}>
+        <div  key={speaker.id} className={styles.nameWrapper}>
             <span>{speaker.name}</span>
             <img src="/imags/chat-bubble.png" alt="chat-bubble" />
         </div>
