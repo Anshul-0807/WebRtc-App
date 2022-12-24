@@ -22,4 +22,4 @@ const roomSchema = new Schema({
 }
 );
 
-module.exports = mongoose.model('Refresh' , refreshSchema, 'tokens' );
+module.exports = mongoose.model('Room' , roomSchema, 'rooms' );
