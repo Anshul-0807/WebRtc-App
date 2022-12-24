@@ -21,6 +21,8 @@ export const activate = (data) => api.post("api/activate", data);
 
 export const logout = () => api.post("/api/logout");
 
+export const createRoom = (data) => api.post("/api/rooms")
+
 // Intercepter
 
 api.interceptors.response.use(

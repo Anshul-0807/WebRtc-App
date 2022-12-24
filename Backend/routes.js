@@ -8,5 +8,6 @@ router.post('/api/verify-otp', authcontroller.verifyOtp);
 router.post('/api/activate', authMiddleware, activateController.activate);
 router.get('/api/refresh', authcontroller.refresh);
 router.post('/api/logout', authMiddleware, authcontroller.logout);
+router.post('/api/rooms', authMiddleware, roomscontroller.create)
 
 module.exports = router;
