@@ -8,7 +8,13 @@ const roomSchema = new Schema({
     roomType : {type : String , required : true },
     ownerId: {type: Schema.Types.ObjectId, Ref: 'User'},
     speakers : {
-        type: []
+        type: [
+            {
+                type: Schema.Types.ObjectId, 
+                Ref: 'User'
+            }
+        ],
+        required: false,
     }
 },
 {
