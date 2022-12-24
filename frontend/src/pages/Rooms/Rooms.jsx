@@ -83,7 +83,7 @@ export const Rooms = () => {
           }
         </div>
       </div>
-      {showModal && <AddRoomModal onClose={ () => setShowModal(false)}/>}
+      {showModal && <AddRoomModal onClose={() => setShowModal(false)}/>}
     </>
   );
 };
