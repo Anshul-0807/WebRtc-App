@@ -42,8 +42,9 @@ export const Navigation = () => {
           <h3>{user?.name}</h3>
 
         <Link to="/"> 
-          <img className={styles.avatar}
-          src = {user?.avatar}
+          <img
+           className={styles.avatar}
+          src = {user.avatar}
            width="40"
            height="40"  
            alt="avatar" />
