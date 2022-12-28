@@ -7,7 +7,7 @@ class RoomService{
         topic,
         roomType,
         ownerId,
-        speakers: [ownerId]
+        speakers: [ownerId],
     });
     return room;
     }

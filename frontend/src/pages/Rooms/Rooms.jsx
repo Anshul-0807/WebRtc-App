@@ -66,7 +66,7 @@ import { getAllRooms } from "../../http";
      
 
      function openModal(){
-       setShowModal(true);
+     setShowModal(true);
      }
   return (
     <>
