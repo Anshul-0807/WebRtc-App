@@ -39,7 +39,7 @@ export const StepAvatar = ({ onNext }) => {
        dispatch(setAuth(data));
       }
     }
-    setLoading(false);
+    // setLoading(false);
    } catch (err) {
     console.log(err);
    } finally {

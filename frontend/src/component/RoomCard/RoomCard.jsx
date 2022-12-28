@@ -6,7 +6,7 @@ const RoomCard = ({ room }) => {
       <h3 className={styles.topic}>{room.topic}</h3>
       <div className={styles.speakers}>
       <div className={styles.avatars}>
-        {room.speakers.map((speaker) => (
+         {  room.speakers.map((speaker) => (
             <img key={speaker.id} src={speaker.avatar} alt="speaker-avatar" />
         ))}
 

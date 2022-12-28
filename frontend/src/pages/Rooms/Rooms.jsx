@@ -50,7 +50,7 @@ import { getAllRooms } from "../../http";
 
 
 
-export const Rooms = () => {
+ const Rooms = () => {
 
      const [showModal, setShowModal] = useState(false);
      const [rooms , setRooms] = useState([]);
@@ -58,10 +58,11 @@ export const Rooms = () => {
      useEffect(() => {
        const fetchRooms = async () => {
         const { data } = await getAllRooms();
-        setRooms(data);
-       }
+       setRooms(data);
+        
+       };
        fetchRooms();
-     }, [])
+     }, []);
      
 
      function openModal(){
