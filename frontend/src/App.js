@@ -54,7 +54,7 @@ function App() {
         </SemiProtectedRoutes>
 
         <ProtectedRoutes path="/rooms">
-          <Rooms />
+          <Rooms/>
         </ProtectedRoutes>
 
         <ProtectedRoutes path="/room/:id">
