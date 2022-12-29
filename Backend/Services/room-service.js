@@ -12,8 +12,8 @@ class RoomService{
     return room;
     }
      
-    async getAllRooms(types){
-        const rooms = await RoomModel.find({roomType: { $in: types} });
+    async getAllRooms(types) {
+        const rooms = await RoomModel.find({ roomType: { $in: types } })
         return rooms; 
     }
 
