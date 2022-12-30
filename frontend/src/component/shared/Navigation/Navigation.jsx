@@ -28,7 +28,7 @@ export const Navigation = () => {
     } catch (err) {
       console.log(err);
     }
-  } 
+  }
 
   return (
     <nav className={`${styles.navbar} container `}>
@@ -37,27 +37,27 @@ export const Navigation = () => {
         <span style={logoText}>coders house</span>
       </Link>
 
-       {
-        isAuth && (
-          <div className={styles.navRight}>
-
+      {isAuth && (
+        <div className={styles.navRight}>
           <h3>{user?.name}</h3>
 
-        <Link to="/"> 
-          <img
-           className={styles.avatar}
-           src = {user.avatar}
-           width="40"
-           height="40"  
-           alt="avatar" />
-        </Link>
-        <button className={styles.logoutButton} onClick={logoutUser}>
-          <img src="/imags/logoutimg.png" alt="logout" />
-        </button>
-      </div>
-        )
-       }
+          {user.avatar && (
+            <Link to="/">
+              <img
+                className={styles.avatar}
+                src={user.avatar}
+                width="40"
+                height="40"
+                alt="avatar"
+              />
+            </Link>
+          )}
 
+          <button className={styles.logoutButton} onClick={logoutUser}>
+            <img src="/imags/logoutimg.png" alt="logout" />
+          </button>
+        </div>
+      )}
     </nav>
   );
 };
