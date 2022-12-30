@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./RoomCard.module.css";
+import { useHistory } from "react-router";
 
 const RoomCard = ({ room }) => {
   return (
