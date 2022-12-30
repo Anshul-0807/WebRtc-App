@@ -37,7 +37,9 @@ export const Navigation = () => {
         <span style={logoText}>coders house</span>
       </Link>
 
-       <div className={styles.navRight}>
+       {
+        isAuth && (
+          <div className={styles.navRight}>
 
           <h3>{user?.name}</h3>
 
@@ -50,10 +52,12 @@ export const Navigation = () => {
            alt="avatar" />
         </Link>
         <button className={styles.logoutButton} onClick={logoutUser}>
-          <img src="/imags/logoutimg.png" alt="" />
+          <img src="/imags/logoutimg.png" alt="logout" />
         </button>
       </div>
-      {/* {isAuth && } */}
+        )
+       }
+
     </nav>
   );
 };
