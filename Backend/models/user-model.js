@@ -10,7 +10,10 @@ const userSchema = new Schema(
       type: String,
       required: false,
       get: (avatar) => {
-        return `${process.env.BASE_URL}${avatar}`;
+        if(avatar){
+          return `${process.env.BASE_URL}${avatar}`;
+        }
+        return avatar;
       },
     },
     activated: { type: Boolean, required: false, default: false },

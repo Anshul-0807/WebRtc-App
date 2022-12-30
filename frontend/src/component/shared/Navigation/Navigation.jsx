@@ -40,19 +40,19 @@ export const Navigation = () => {
       {isAuth && (
         <div className={styles.navRight}>
           <h3>{user?.name}</h3>
-
-          {user.avatar && (
-            <Link to="/">
-              <img
-                className={styles.avatar}
-                src={user.avatar}
-                width="40"
-                height="40"
-                alt="avatar"
-              />
-            </Link>
-          )}
-
+          <Link to="/">
+            <img
+              className={styles.avatar}
+              src={user.avatar
+                ? user.avatar 
+                : "/imags/anime2.png"
+               }
+              width="40"
+              height="40"
+              alt="avatar"
+            />
+          </Link>
+          )
           <button className={styles.logoutButton} onClick={logoutUser}>
             <img src="/imags/logoutimg.png" alt="logout" />
           </button>
