@@ -3,7 +3,12 @@ import styles from "./RoomCard.module.css";
 
 const RoomCard = ({ room }) => {
   return (
-    <div onClick={() =>{}} className={styles.card}>
+    <div
+      onClick={() => {
+        history.push(`/room/${room.id}`);
+      }}
+      className={styles.card}
+    >
       <h3 className={styles.topic}>{room.topic}</h3>
       <div
         className={`${styles.speakers} ${
