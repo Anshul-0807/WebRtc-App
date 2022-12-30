@@ -52,7 +52,7 @@ export const Navigation = () => {
               alt="avatar"
             />
           </Link>
-          )
+          
           <button className={styles.logoutButton} onClick={logoutUser}>
             <img src="/imags/logoutimg.png" alt="logout" />
           </button>
