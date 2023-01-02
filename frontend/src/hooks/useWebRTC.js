@@ -10,5 +10,6 @@ export const useWebRTC  = () => {
           id:2,
           name: 'john doe',
         },
-      ])
-}
+      ]);
+     return { clients };
+};
