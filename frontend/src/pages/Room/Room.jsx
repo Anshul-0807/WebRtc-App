@@ -2,16 +2,7 @@ import React, {useState} from 'react'
 
 const Room = () => {
 
-const [clients, setClients] = useState([
-  {
-    id: 1,
-    name: 'Anshul',
-  },
-  {
-    id:2,
-    name: 'john doe',
-  },
-])
+
 
   return (
     <div>
