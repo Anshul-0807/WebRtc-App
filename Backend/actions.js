@@ -1,4 +1,6 @@
-export const ACTIONS = {
+ const ACTIONS = {
     JOIN: 'join',
     LEAVE: 'leave',
 };
+
+module.exports = ACTIONS;

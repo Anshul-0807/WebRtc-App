@@ -12,6 +12,8 @@ const cors = require('cors');
 
 const cookieparser = require('cookie-parser');
 
+const ACTIONS = require('./actions');
+
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server, {
@@ -46,10 +48,22 @@ app.get('/', (req,res) => {
     res.send('hello from express js')
 });
 
-// socket
+// sockets
+
+const socketUserMapping = {
+
+}
 
 io.on('connection', (socket) => {
     console.log('new connection ', socket.id);
+
+    socket.on(ACTIONS.JOIN, ({roomId, user}) => {
+        socketUserMapping[socket.id] = user;
+
+         //new map
+    const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+    console.log(clients);
+    }); 
 });
 
 server.listen(PORT, () => console.log(` listening on port ${PORT}`));
