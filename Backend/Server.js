@@ -62,7 +62,12 @@ io.on('connection', (socket) => {
 
          //new map
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
-    console.log(clients);
+    clients.forEach(clientId => {
+        io.to(clientId).emit(ACTIONS.ADD_PEER, {} )
+    });
+    socket.emit(ACTIONS.ADD_PEER, {});
+
+    socket.join(roomId);
     }); 
 });
 
