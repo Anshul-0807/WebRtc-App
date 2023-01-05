@@ -51,6 +51,14 @@ export const useWebRTC = (roomId, user) => {
     });
   }, []);
 
+  useEffect(() => {
+    const handleNewPeer = async ({peerId, createOffer, user: remoteUser})=>{
+
+    }
+    socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
+  }, [])
+  
+
   const provideRef = (instance, userId) => {
     audioElements.current[userId] = instance;
   };
