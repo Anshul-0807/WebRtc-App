@@ -109,7 +109,7 @@ export const useWebRTC = (roomId, user) => {
         // send offer to another client
        socket.current.emit(ACTIONS.RELAY_SDP, {
         peerId,
-        sessionDiscription: offer
+        sessionDescription: offer
        })
       
       }

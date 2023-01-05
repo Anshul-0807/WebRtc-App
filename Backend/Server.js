@@ -73,6 +73,23 @@ io.on("connection", (socket) => {
 
     socket.join(roomId);
   });
+
+    //   Handle relay ice
+   socekt.on(ACTIONS.RELAY_ICE, ({peerId, icecandidate}) => {
+    io.to(peerId).emit(ACTIONS.RELAY_ICE, {
+        peerId: socket.id,
+        icecandidate,
+    });
+   });
+
+   // Handle relay sdp (session description)
+   socket.on(ACTIONS.RELAY_SDP, ({peerId, sessionDescription}) => {
+    io.to(peerId).emit(ACTIONS.RELAY_SDP, {
+        peerId: socket.id, 
+        sessionDescription,
+    })
+   })
+
 });
 
 server.listen(PORT, () => console.log(` listening on port ${PORT}`));
