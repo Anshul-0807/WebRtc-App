@@ -15,7 +15,7 @@ export const useWebRTC = (roomId, user) => {
      socket.current = socketInit();
   }, [])
 
-  const addNewClients = useCallback(
+  const addNewClient = useCallback(
     (newClient, cb) => {
       const lookingFor = clients.find((client) => client.id === newClient.id);
 
@@ -36,7 +36,7 @@ export const useWebRTC = (roomId, user) => {
     };
 
     startCapture().then(() => {
-      addNewClients(user, () => {
+      addNewClient(user, () => {
         const localElement = audioElements.current[user.id];
         if (localElement) {
           localElement.volume = 0;
@@ -76,7 +76,18 @@ export const useWebRTC = (roomId, user) => {
 
       connections.current[peerId].ontrack = ({
         streams : [remoteStream]
-      })
+      }) => {
+       addNewClient(remoteUser, () => {
+         if(audioElements.current[remoteUser.id]){
+          audioElements.current[remoteUser.id].srcObject = remoteStream
+         } else {
+          let settled = false;
+          const interval = setInterval(() => {
+
+          }, 1000)
+         }
+       })
+      }
 
     };
     socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
