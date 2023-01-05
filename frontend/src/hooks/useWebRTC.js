@@ -66,8 +66,17 @@ export const useWebRTC = (roomId, user) => {
       
       // Handle new ice candidate
       connections.current[peerId].onicecandidate = (event) => {
-        socket.current.on(ACTIONS.RELAY_ICE)
+        socket.current.on(ACTIONS.RELAY_ICE, {
+          peerId,
+          icecandidate: event.candidate
+        })
       }
+
+      // Handle on track on this connection
+
+      connections.current[peerId].ontrack = ({
+        streams : [remoteStream]
+      })
 
     };
     socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
