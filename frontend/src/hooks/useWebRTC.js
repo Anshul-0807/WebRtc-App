@@ -95,41 +95,35 @@ export const useWebRTC = (roomId, user) => {
       //  Add local track to remote connections
 
       localMediaStream.current.getTrack().forEach((track) => {
-        connections.current[peerId].addTrack(
-          track,
-           localMediaStream.current
-           );
+        connections.current[peerId].addTrack(track, localMediaStream.current);
       });
 
       //  create offer
 
-      if(createOffer){
+      if (createOffer) {
         const offer = await connections.current[peerId].createOffer();
 
         // send offer to another client
-       socket.current.emit(ACTIONS.RELAY_SDP, {
-        peerId,
-        sessionDescription: offer
-       })
-      
+        socket.current.emit(ACTIONS.RELAY_SDP, {
+          peerId,
+          sessionDescription: offer,
+        });
       }
-
     };
     socket.current.on(ACTIONS.ADD_PEER, handleNewPeer);
 
-   return() => {
-    socket.current.off(ACTIONS.ADD_PEER);
-   }
-
+    return () => {
+      socket.current.off(ACTIONS.ADD_PEER);
+    };
   }, []);
 
   // Handle ice candidate
 
   useEffect(() => {
-    socket.current.on(ACTIONS.RELAY_ICE, ({peerId, icecandidate}) => {
-      if(icecandidate){
+    socket.current.on(ACTIONS.RELAY_ICE, ({ peerId, icecandidate }) => {
+      if (icecandidate) {
         connections.current[peerId].addIceCandidate(icecandidate);
-      };
+      }
     });
     return () => {
       socket.current.off(ACTIONS.RELAY_ICE);
@@ -139,19 +133,24 @@ export const useWebRTC = (roomId, user) => {
   //  Handle SDP
 
   useEffect(() => {
+    const handleRemoteSdp = async ({
+      peerId,
+      sessionDescription: remoteSessionDescription,
+    }) => {
+     connections.current[peerId].setRemoteDescription(
+      new RTCSessionDescription(remoteSessionDescription)
+     )
 
-    const handleRemoteSdp = async ({peerId, sessionDescription: remoteSessionDescription,}) => {
+    //   if session description is type of offer then create an answer
 
-    }
+    };
 
-    socket.current.on(ACTIONS.RELAY_SDP, handleRemoteSdp)
+    socket.current.on(ACTIONS.RELAY_SDP, handleRemoteSdp);
 
     return () => {
       socket.current.off(ACTIONS.RELAY_SDP);
     };
-  }, [])
-  
-  
+  }, []);
 
   const provideRef = (instance, userId) => {
     audioElements.current[userId] = instance;
