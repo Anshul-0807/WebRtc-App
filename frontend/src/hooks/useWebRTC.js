@@ -94,6 +94,12 @@ export const useWebRTC = (roomId, user) => {
          }
        })
       }
+     
+    //  Add local track to remote connections
+
+     localMediaStream.current.getTrack().forEach(track => {
+      
+     })
 
     };
     socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
