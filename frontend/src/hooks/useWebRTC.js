@@ -83,7 +83,8 @@ export const useWebRTC = (roomId, user) => {
          } else {
           let settled = false;
           const interval = setInterval(() => {
-
+            if(audioElements.current[remoteUser.id]){
+              audioElements.current[remoteUser.id].srcObject = remoteStream}    
           }, 1000)
          }
        })
