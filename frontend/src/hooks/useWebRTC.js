@@ -100,6 +100,20 @@ export const useWebRTC = (roomId, user) => {
            localMediaStream.current
            );
       });
+
+      //  create offer
+
+      if(createOffer){
+        const offer = await connections.current[peerId].createOffer();
+
+        // send offer to another client
+       socket.current.emit(ACTIONS.RELAY_SDP, {
+        peerId,
+        sessionDiscription: offer
+       })
+      
+      }
+
     };
     socket.current.on(ACTIONS.ADD_PEER, handleNewPeer);
   }, []);
