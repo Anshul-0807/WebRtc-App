@@ -143,6 +143,18 @@ export const useWebRTC = (roomId, user) => {
 
     //   if session description is type of offer then create an answer
 
+     if(remoteSessionDescription.type === 'offer'){
+      const connection = connections.current[peerId];
+      const answer = await connection.createAnswer();
+
+      connection.setLocalDescription(answer);
+
+      socket.current.emit(ACTIONS.RELAY_SDP, {
+        peerId,
+        sessionDescription: answer,
+      })
+     }
+
     };
 
     socket.current.on(ACTIONS.RELAY_SDP, handleRemoteSdp);
