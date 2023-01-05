@@ -116,6 +116,11 @@ export const useWebRTC = (roomId, user) => {
 
     };
     socket.current.on(ACTIONS.ADD_PEER, handleNewPeer);
+
+   return() => {
+    socket.current.off(ACTIONS.ADD_PEER);
+   }
+
   }, []);
 
   const provideRef = (instance, userId) => {
