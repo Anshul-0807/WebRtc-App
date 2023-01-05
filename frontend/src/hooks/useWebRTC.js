@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useStateWithCallback } from "./useStateWithCallback";
-import {socketInit} from '../socket';
+import { socketInit } from "../socket";
 import { ACTIONS } from "../actions";
-import freeice from 'freeice';
+import freeice from "freeice";
 
 export const useWebRTC = (roomId, user) => {
   const [clients, setClients] = useStateWithCallback([]);
@@ -12,8 +12,8 @@ export const useWebRTC = (roomId, user) => {
   const socket = useRef(null);
 
   useEffect(() => {
-     socket.current = socketInit();
-  }, [])
+    socket.current = socketInit();
+  }, []);
 
   const addNewClient = useCallback(
     (newClient, cb) => {
@@ -45,66 +45,64 @@ export const useWebRTC = (roomId, user) => {
 
         // socket emit Join socket io
 
-        socket.current.emit(ACTIONS.JOIN , {roomId, user});
-
+        socket.current.emit(ACTIONS.JOIN, { roomId, user });
       });
     });
   }, []);
 
   useEffect(() => {
-    const handleNewPeer = async ({peerId, createOffer, user: remoteUser})=>{
+    const handleNewPeer = async ({ peerId, createOffer, user: remoteUser }) => {
       //  if already connected then give warning
-      if(peerId in connections.current){
+      if (peerId in connections.current) {
         return console.warn(
           `You are already connected with ${peerId} (${user.name})`
         );
       }
-      
+
       connections.current[peerId] = new RTCPeerConnection({
-        iceServers: freeice()
+        iceServers: freeice(),
       });
-      
+
       // Handle new ice candidate
       connections.current[peerId].onicecandidate = (event) => {
         socket.current.on(ACTIONS.RELAY_ICE, {
           peerId,
-          icecandidate: event.candidate
-        })
-      }
+          icecandidate: event.candidate,
+        });
+      };
 
       // Handle on track on this connection
 
-      connections.current[peerId].ontrack = ({
-        streams : [remoteStream]
-      }) => {
-       addNewClient(remoteUser, () => {
-         if(audioElements.current[remoteUser.id]){
-          audioElements.current[remoteUser.id].srcObject = remoteStream
-         } else {
-          let settled = false;
-          const interval = setInterval(() => {
-            if(audioElements.current[remoteUser.id]){
-              audioElements.current[remoteUser.id].srcObject = remoteStream
-              settled = true;
-            }    
-            if(settled){
-              clearInterval(interval);
-            }
-          }, 1000)
-         }
-       })
-      }
-     
-    //  Add local track to remote connections
+      connections.current[peerId].ontrack = ({ streams: [remoteStream] }) => {
+        addNewClient(remoteUser, () => {
+          if (audioElements.current[remoteUser.id]) {
+            audioElements.current[remoteUser.id].srcObject = remoteStream;
+          } else {
+            let settled = false;
+            const interval = setInterval(() => {
+              if (audioElements.current[remoteUser.id]) {
+                audioElements.current[remoteUser.id].srcObject = remoteStream;
+                settled = true;
+              }
+              if (settled) {
+                clearInterval(interval);
+              }
+            }, 1000);
+          }
+        });
+      };
 
-     localMediaStream.current.getTrack().forEach(track => {
-      
-     })
+      //  Add local track to remote connections
 
+      localMediaStream.current.getTrack().forEach((track) => {
+        connections.current[peerId].addTrack(
+          track,
+           localMediaStream.current
+           );
+      });
     };
-    socket.current.on(ACTIONS.ADD_PEER, handleNewPeer)
+    socket.current.on(ACTIONS.ADD_PEER, handleNewPeer);
   }, []);
-  
 
   const provideRef = (instance, userId) => {
     audioElements.current[userId] = instance;
