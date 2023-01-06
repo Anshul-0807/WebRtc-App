@@ -106,8 +106,10 @@ io.on("connection", (socket) => {
             peerId: clientId,
             userId: socketUserMapping[clientId].id,
           })
-        })
-      })
+        });
+        socket.leave(roomId);
+      });
+      delete socketUserMapping[socket.id];
     }
     socket.on(ACTIONS.LEAVE, leaveRoom);
 
