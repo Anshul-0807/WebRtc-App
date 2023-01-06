@@ -87,8 +87,16 @@ io.on("connection", (socket) => {
     io.to(peerId).emit(ACTIONS.SESSION_DESCRIPTION, {
         peerId: socket.id, 
         sessionDescription,
-    })
-   })
+    });
+   });
+
+    //  Leaving the room
+    const leaveRoom = ({roomId}) => {
+      const {rooms} = socket;
+
+      Array.from(rooms).forEach
+    }
+    socket.on(ACTIONS.LEAVE, leaveRoom);
 
 });
 
