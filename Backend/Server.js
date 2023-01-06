@@ -70,52 +70,48 @@ io.on("connection", (socket) => {
         createOffer: true,
         user: socketUserMapping[clientId],
       });
-
     });
-  
 
     socket.join(roomId);
   });
 
-    //   Handle relay ice
-     socket.on(ACTIONS.RELAY_ICE, ({peerId, icecandidate}) => {
+  //   Handle relay ice
+  socket.on(ACTIONS.RELAY_ICE, ({ peerId, icecandidate }) => {
     io.to(peerId).emit(ACTIONS.ICE_CANDIDATE, {
-        peerId: socket.id,
-        icecandidate,
+      peerId: socket.id,
+      icecandidate,
     });
-   });
+  });
 
-   // Handle relay sdp (session description)
-   socket.on(ACTIONS.RELAY_SDP, ({peerId, sessionDescription}) => {
+  // Handle relay sdp (session description)
+  socket.on(ACTIONS.RELAY_SDP, ({ peerId, sessionDescription }) => {
     io.to(peerId).emit(ACTIONS.SESSION_DESCRIPTION, {
-        peerId: socket.id, 
-        sessionDescription,
+      peerId: socket.id,
+      sessionDescription,
     });
-   });
+  });
 
-    //  Leaving the room
-    const leaveRoom = ({roomId}) => {
-      const {rooms} = socket;
+  //  Leaving the room
+  const leaveRoom = ({ roomId }) => {
+    const { rooms } = socket;
 
-      Array.from(rooms).forEach(roomId => {
-        const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || [] 
-        );
-        clients.forEach(clientId => {
-          io.to(clientId).emit(ACTIONS.REMOVE_PEER, {
-            peerId: socket.id,
-            userId: socketUserMapping[socket.id].id,
-          });
-          socket.emit(ACTIONS.REMOVE_PEER, {
-            peerId: clientId,
-            userId: socketUserMapping[clientId].id,
-          })
+    Array.from(rooms).forEach((roomId) => {
+      const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+      clients.forEach((clientId) => {
+        io.to(clientId).emit(ACTIONS.REMOVE_PEER, {
+          peerId: socket.id,
+          userId: socketUserMapping[socket.id].id,
         });
-        socket.leave(roomId);
+        socket.emit(ACTIONS.REMOVE_PEER, {
+          peerId: clientId,
+          userId: socketUserMapping[clientId].id,
+        });
       });
-      delete socketUserMapping[socket.id];
-    }
-    socket.on(ACTIONS.LEAVE, leaveRoom);
-
+      socket.leave(roomId);
+    });
+    delete socketUserMapping[socket.id];
+  };
+  socket.on(ACTIONS.LEAVE, leaveRoom);
 });
 
 server.listen(PORT, () => console.log(` listening on port ${PORT}`));
