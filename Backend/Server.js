@@ -84,7 +84,7 @@ io.on("connection", (socket) => {
 
    // Handle relay sdp (session description)
    socket.on(ACTIONS.RELAY_SDP, ({peerId, sessionDescription}) => {
-    io.to(peerId).emit(ACTIONS.RELAY_SDP, {
+    io.to(peerId).emit(ACTIONS.SESSION_DESCRIPTION, {
         peerId: socket.id, 
         sessionDescription,
     })

@@ -5,4 +5,5 @@ export const ACTIONS = {
   RELAY_ICE: "relay-ice",
   RELAY_SDP: "relay-sdp",
   ICE_CANDIDATE: "ice-candidate",
+  SESSION_DESCRIPTION: "session-description",
 };
