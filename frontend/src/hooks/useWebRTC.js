@@ -48,10 +48,23 @@ export const useWebRTC = (roomId, user) => {
         socket.current.emit(ACTIONS.JOIN, { roomId, user });
       });
     });
+
+    return() => {
+      //  leaving the room
+      localMediaStream.current.getTrack()
+      .forEach(track => track.stop());
+
+      socket.current.emit(ACTIONS.LEAVE, {roomId});
+    };
+
   }, []);
 
   useEffect(() => {
-    const handleNewPeer = async ({ peerId, createOffer, user: remoteUser }) => {
+    const handleNewPeer = async ({
+       peerId, 
+       createOffer, 
+       user: remoteUser,
+      }) => {
       //  if already connected then give warning
       if (peerId in connections.current) {
         return console.warn(
