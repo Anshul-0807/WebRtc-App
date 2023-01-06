@@ -94,7 +94,11 @@ io.on("connection", (socket) => {
     const leaveRoom = ({roomId}) => {
       const {rooms} = socket;
 
-      Array.from(rooms).forEach
+      Array.from(rooms).forEach(roomId => {
+        const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || [] 
+        );
+        
+      })
     }
     socket.on(ACTIONS.LEAVE, leaveRoom);
 
