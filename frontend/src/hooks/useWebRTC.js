@@ -49,12 +49,11 @@ export const useWebRTC = (roomId, user) => {
       });
     });
 
-    return() => {
-      //  leaving the room
-      localMediaStream.current.getTrack()
-      .forEach(track => track.stop());
-
-      socket.current.emit(ACTIONS.LEAVE, {roomId});
+    return () => {
+      localMediaStream.current
+          .getTracks()
+          .forEach((track) => track.stop());
+      socket.current.emit(ACTIONS.LEAVE, { roomId });
     };
 
   }, []);
@@ -107,7 +106,7 @@ export const useWebRTC = (roomId, user) => {
 
       //  Add local track to remote connections
 
-      localMediaStream.current.getTrack().forEach((track) => {
+      localMediaStream.current.getTracks().forEach((track) => {
         connections.current[peerId].addTrack(track, localMediaStream.current);
       });
 
@@ -115,6 +114,8 @@ export const useWebRTC = (roomId, user) => {
 
       if (createOffer) {
         const offer = await connections.current[peerId].createOffer();
+
+        await connections.current[peerId].setLocalDescription(offer);
 
         // send offer to another client
         socket.current.emit(ACTIONS.RELAY_SDP, {
@@ -138,6 +139,7 @@ export const useWebRTC = (roomId, user) => {
         connections.current[peerId].addIceCandidate(icecandidate);
       }
     });
+
     return () => {
       socket.current.off(ACTIONS.ICE_CANDIDATE);
     };

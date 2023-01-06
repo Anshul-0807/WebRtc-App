@@ -64,18 +64,21 @@ io.on("connection", (socket) => {
         createOffer: false,
         user,
       });
+
+      socket.emit(ACTIONS.ADD_PEER, {
+        peerId: clientId,
+        createOffer: true,
+        user: socketUserMapping[clientId],
+      });
+
     });
-    socket.emit(ACTIONS.ADD_PEER, {
-      peerId: clientId,
-      createOffer: true,
-      user: socketUserMapping[clientId],
-    });
+  
 
     socket.join(roomId);
   });
 
     //   Handle relay ice
-   socekt.on(ACTIONS.RELAY_ICE, ({peerId, icecandidate}) => {
+     socket.on(ACTIONS.RELAY_ICE, ({peerId, icecandidate}) => {
     io.to(peerId).emit(ACTIONS.ICE_CANDIDATE, {
         peerId: socket.id,
         icecandidate,
