@@ -137,24 +137,23 @@ export const useWebRTC = (roomId, user) => {
       peerId,
       sessionDescription: remoteSessionDescription,
     }) => {
-     connections.current[peerId].setRemoteDescription(
-      new RTCSessionDescription(remoteSessionDescription)
-     )
+      connections.current[peerId].setRemoteDescription(
+        new RTCSessionDescription(remoteSessionDescription)
+      );
 
-    //   if session description is type of offer then create an answer
+      //   if session description is type of offer then create an answer
 
-     if(remoteSessionDescription.type === 'offer'){
-      const connection = connections.current[peerId];
-      const answer = await connection.createAnswer();
+      if (remoteSessionDescription.type === "offer") {
+        const connection = connections.current[peerId];
+        const answer = await connection.createAnswer();
 
-      connection.setLocalDescription(answer);
+        connection.setLocalDescription(answer);
 
-      socket.current.emit(ACTIONS.RELAY_SDP, {
-        peerId,
-        sessionDescription: answer,
-      })
-     }
-
+        socket.current.emit(ACTIONS.RELAY_SDP, {
+          peerId,
+          sessionDescription: answer,
+        });
+      }
     };
 
     socket.current.on(ACTIONS.SESSION_DESCRIPTION, handleRemoteSdp);
@@ -164,26 +163,24 @@ export const useWebRTC = (roomId, user) => {
     };
   }, []);
 
-    // Handle remove peer
+  // Handle remove peer
 
-    useEffect(() => {
-      const handleRemovePeer = async({peerId, userId}) => {
-         if(connections.current[peerId]){
-          connections.current[peerId].close();
-         }
-
-         delete connections.current[peerId];
-         delete audioElements.current[peerId];
-         setClients(list => list.filter(client => client.id !== userId));
-
+  useEffect(() => {
+    const handleRemovePeer = async ({ peerId, userId }) => {
+      if (connections.current[peerId]) {
+        connections.current[peerId].close();
       }
-     socket.current.on(ACTIONS.REMOVE_PEER, handleRemovePeer);
 
-     return () => {
+      delete connections.current[peerId];
+      delete audioElements.current[peerId];
+      setClients((list) => list.filter((client) => client.id !== userId));
+    };
+    socket.current.on(ACTIONS.REMOVE_PEER, handleRemovePeer);
+
+    return () => {
       socket.current.off(ACTIONS.REMOVE_PEER);
     };
-    }, [])
-    
+  }, []);
 
   const provideRef = (instance, userId) => {
     audioElements.current[userId] = instance;
