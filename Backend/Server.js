@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
 
     //   Handle relay ice
    socekt.on(ACTIONS.RELAY_ICE, ({peerId, icecandidate}) => {
-    io.to(peerId).emit(ACTIONS.RELAY_ICE, {
+    io.to(peerId).emit(ACTIONS.ICE_CANDIDATE, {
         peerId: socket.id,
         icecandidate,
     });
