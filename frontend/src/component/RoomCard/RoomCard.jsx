@@ -3,6 +3,7 @@ import styles from "./RoomCard.module.css";
 import { useHistory } from "react-router-dom";
 
 const RoomCard = ({ room }) => {
+  console.log(room, "roommmmmm");
   const history = useHistory();
   return (
     <div
@@ -20,6 +21,7 @@ const RoomCard = ({ room }) => {
         <div className={styles.avatars}>
           {room.speakers.map((speaker) => (
             <img key={speaker.id} src={speaker.avatar} alt="speaker-avatar" />
+
           ))}
         </div>
         <div className={styles.names}>
