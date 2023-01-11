@@ -3,7 +3,7 @@ import styles from "./RoomCard.module.css";
 import { useHistory } from "react-router-dom";
 
 const RoomCard = ({ room }) => {
-  console.log(room, "roommmmmm");
+  console.log(room, "roommmm");
   const history = useHistory();
   return (
     <div
