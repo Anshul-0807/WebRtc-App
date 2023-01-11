@@ -100,11 +100,11 @@ io.on("connection", (socket) => {
       clients.forEach((clientId) => {
         io.to(clientId).emit(ACTIONS.REMOVE_PEER, {
           peerId: socket.id,
-          userId: socketUserMapping[socket.id].id,
+          userId: socketUserMapping[socket.id]?.id,
         });
         socket.emit(ACTIONS.REMOVE_PEER, {
           peerId: clientId,
-          userId: socketUserMapping[clientId].id,
+          userId: socketUserMapping[clientId]?.id,
         });
       });
       socket.leave(roomId);
@@ -112,6 +112,7 @@ io.on("connection", (socket) => {
     delete socketUserMapping[socket.id];
   };
   socket.on(ACTIONS.LEAVE, leaveRoom);
+  socket.on('disconnecting', leaveRoom);
 });
 
 server.listen(PORT, () => console.log(` listening on port ${PORT}`));
