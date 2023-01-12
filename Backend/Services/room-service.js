@@ -21,5 +21,11 @@ class RoomService {
       console.log(rooms[0].speakers);
     return rooms;
   }
+
+   async getRoom(roomId) {
+      const room = await RoomModel.findOne({ _id: roomId });
+      return room;
+   }
+
 }
 module.exports = new RoomService();
