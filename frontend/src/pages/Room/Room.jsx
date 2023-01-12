@@ -12,7 +12,9 @@ const Room = () => {
 
   const handleManualLeave = () =>{
    history.push('/rooms');
-  }
+  };
+
+  
 
   return (
     <div>
@@ -22,9 +24,24 @@ const Room = () => {
          <span>All voice rooms</span>
          </button>
     </div>
-      <h1>All connected clients</h1>
+    <div className={styles.clientsWrap}> 
+    <div className={styles.header}>
+      <h2 className={styles.topic}>Node js is Awesome</h2>
+      <div className={styles.actions}>
+        <button className={styles.actionBtn}>
+          <img src="/imags/palm5.png" alt="palm-icon" />
+
+        </button>
+        <button onClick={handleManualLeave} className={styles.actionBtn}>
+          <img src="/imags/piece.png" alt="piece-emoji" />
+          <span> Leave quietly </span>
+        </button>
+      </div>
+    </div>
+      <div className={styles.clientsList}>
       {clients.map((client) => {
         return (
+          <div className={styles.client}>
           <div className={styles.userHead} key={client.id}>
             <audio
               ref={(instance) => provideRef(instance, client.id)}
@@ -32,10 +49,23 @@ const Room = () => {
               autoPlay
             ></audio>
             <img className={styles.userAvatar} src={client.avatar} alt="avatar" />
-            <h4>{client.name}</h4>
+           <button className={styles.micBtn}>
+            {/* <img 
+            src="/imags/"
+             alt="mic-icon" /> */}
+            
+           <img
+            src="/imags/mic-mute2.png" 
+            alt="mic-mute" />
+
+           </button>
+          </div>
+          <h4>{client.name}</h4>
           </div>
         );
       })}
+      </div>
+      </div>
     </div>
   );
 };
