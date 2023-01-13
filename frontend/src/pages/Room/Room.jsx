@@ -8,9 +8,15 @@ import { getRoom } from "../../http";
 const Room = () => {
   const { id: roomId } = useParams();
   const user = useSelector((state) => state.auth.user);
-  const { clients, provideRef } = useWebRTC(roomId, user);
+  const { clients, provideRef, handleMute } = useWebRTC(roomId, user);
   const history = useHistory();
   const [room, setRoom] = useState(null);
+  const [isMute, setMute] = useState(true);
+
+  useEffect(() => {
+     handleMute(isMute, user.id);
+  }, [isMute])
+  
 
   const handleManualLeave = () => {
     history.push("/rooms");
@@ -49,11 +55,10 @@ const Room = () => {
         <div className={styles.clientsList}>
           {clients.map((client) => {
             return (
-              <div className={styles.client} key={client.id} >
-                <div className={styles.userHead} >
+              <div className={styles.client} key={client.id}>
+                <div className={styles.userHead}>
                   <audio
                     ref={(instance) => provideRef(instance, client.id)}
-                    // controls
                     autoPlay
                   ></audio>
                   <img
@@ -62,11 +67,15 @@ const Room = () => {
                     alt="avatar"
                   />
                   <button className={styles.micBtn}>
-                    {/* <img 
-            src="/imags/"
-             alt="mic-icon" /> */}
-
-                    <img src="/imags/mic-mute2.png" alt="mic-mute" />
+                    {client.muted ? (
+                      <img 
+                      src="/imags/mic-mute2.png" 
+                      alt="mic-mute" />
+                    ) : (
+                      <img 
+                      src="/imags/on-mic.png" 
+                      alt="mic-icon" />
+                    )}
                   </button>
                 </div>
                 <h4>{client.name}</h4>
