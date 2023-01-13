@@ -91,6 +91,16 @@ io.on("connection", (socket) => {
     });
   });
 
+  // Handle mute/unmute
+
+  socket.on(ACTIONS.MUTE, ({roomId, userId}) => {
+
+  });
+
+  socket.on(ACTIONS.UN_MUTE, ({roomId, userId}) => {
+
+});
+
   //  Leaving the room
   const leaveRoom = ({ roomId }) => {
     const { rooms } = socket;
