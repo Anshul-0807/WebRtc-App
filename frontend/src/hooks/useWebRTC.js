@@ -36,7 +36,7 @@ export const useWebRTC = (roomId, user) => {
     };
 
     startCapture().then(() => {
-      addNewClient(user, () => {
+      addNewClient({...user, muted: true }, () => {
         const localElement = audioElements.current[user.id];
         if (localElement) {
           localElement.volume = 0;
@@ -86,7 +86,7 @@ export const useWebRTC = (roomId, user) => {
       // Handle on track on this connection
 
       connections.current[peerId].ontrack = ({ streams: [remoteStream] }) => {
-        addNewClient(remoteUser, () => {
+        addNewClient({...remoteUser, muted: true }, () => {
           if (audioElements.current[remoteUser.id]) {
             audioElements.current[remoteUser.id].srcObject = remoteStream;
           } else {
@@ -200,6 +200,34 @@ export const useWebRTC = (roomId, user) => {
   const provideRef = (instance, userId) => {
     audioElements.current[userId] = instance;
   };
+
+  // handling mute
+
+  const handleMute = ( isMute, userId) => {
+   
+  let settled = false;
+
+  let interval = setInterval(() => {
+    if(localMediaStream.current){
+      localMediaStream.current.getTracks()[0].enabled = !isMute;
+      if(isMute) {
+        socket.current.emit(ACTIONS.MUTE, {
+          roomId,
+          userId,
+        })
+      } else {
+        socket.current.emit(ACTIONS.UN_MUTE, {
+          roomId,
+          userId,
+        })
+      }
+      settled = true;
+    }
+    if(settled){
+      clearInterval(interval);
+    }
+  }, 200);
+  }
 
   return { clients, provideRef };
 };
