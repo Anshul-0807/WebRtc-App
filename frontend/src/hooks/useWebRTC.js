@@ -10,6 +10,7 @@ export const useWebRTC = (roomId, user) => {
   const connections = useRef({});
   const localMediaStream = useRef(null);
   const socket = useRef(null);
+  const clientsRef = useRef([]); 
 
   useEffect(() => {
     socket.current = socketInit();
@@ -196,6 +197,33 @@ export const useWebRTC = (roomId, user) => {
       socket.current.off(ACTIONS.REMOVE_PEER);
     };
   }, []);
+
+  useEffect(() => {
+    clientsRef.current = clients;
+  }, [clients]);
+  
+
+  // Listen for mute/unmute
+
+  useEffect(() => {
+    socket.current.on(ACTIONS.MUTE, ({peerId, userId}) => {
+      setMute(true, userId);
+    }) 
+
+    socket.current.on(ACTIONS.UN_MUTE, ({peerId, userId}) => {
+      setMute(false, userId);
+    }) 
+
+      const setMute = (mute, userId) => {
+      //  clients
+
+      // setclient
+
+
+      }
+
+  }, [])
+  
 
   const provideRef = (instance, userId) => {
     audioElements.current[userId] = instance;
