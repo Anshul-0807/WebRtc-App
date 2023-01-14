@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
   // Handle mute/unmute
 
   socket.on(ACTIONS.MUTE, ({roomId, userId}) => {
-
+    const clients = Array.from(io.socket.adapter.rooms.get(roomId || []))
   });
 
   socket.on(ACTIONS.UN_MUTE, ({roomId, userId}) => {
