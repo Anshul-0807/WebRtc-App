@@ -14,9 +14,9 @@ const Room = () => {
   const [isMute, setMute] = useState(true);
 
   useEffect(() => {
-        handleMute(isMute, user.id);
-    }, [isMute]);
- 
+    handleMute(isMute, user.id);
+  }, [isMute]);
+
   const handleManualLeave = () => {
     history.push("/rooms");
   };
@@ -31,8 +31,8 @@ const Room = () => {
   }, [roomId]);
 
   const handleMuteClick = (clientId) => {
-    if(clientId !== user.id) return;
-      setMute((isMute) => !isMute);
+    if (clientId !== user.id) return;
+    setMute((isMute) => !isMute);
   };
 
   return (
@@ -62,7 +62,10 @@ const Room = () => {
               <div className={styles.client} key={client.id}>
                 <div className={styles.userHead}>
                   <audio
-                    ref={(instance) => provideRef(instance, client.id)}
+                    ref={(instance) => {
+                      provideRef(instance, client.id);
+                    }}
+                    // controls
                     autoPlay
                   ></audio>
                   <img
@@ -75,9 +78,17 @@ const Room = () => {
                     className={styles.micBtn}
                   >
                     {client.muted ? (
-                      <img src="/imags/mic-mute2.png" alt="mic-mute" />
+                      <img
+                        className={styles.micBtn}
+                        src="/imags/mic-mute.png"
+                        alt="mic-mute"
+                      />
                     ) : (
-                      <img src="/imags/mic.png" alt="mic-icon" />
+                      <img
+                        className={styles.micBtn}
+                        src="/imags/mic.png"
+                        alt="mic-icon"
+                      />
                     )}
                   </button>
                 </div>
