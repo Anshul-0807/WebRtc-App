@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useWebRTC } from "../../hooks/useWebRTC";
+import { useWebRTC } from "../../hooks/useWebRTC.old";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "./Room.module.css";
