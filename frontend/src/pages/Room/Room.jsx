@@ -65,7 +65,7 @@ const Room = () => {
                     ref={(instance) => {
                       provideRef(instance, client.id);
                     }}
-                    // controls
+                    // controls 
                     autoPlay
                   ></audio>
                   <img
