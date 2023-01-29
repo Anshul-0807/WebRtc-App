@@ -10,7 +10,7 @@ const userSchema = new Schema(
       type: String,
       required: false,
       get: (avatar) => {
-        if(avatar){
+        if (avatar) {
           return `${process.env.BASE_URL}${avatar}`;
         }
         return avatar;
@@ -24,4 +24,4 @@ const userSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model('User', userSchema, 'users');
+module.exports = mongoose.model("User", userSchema, "users");
