@@ -25,7 +25,7 @@ export const createRoom = (data) => api.post("/api/rooms", data);
 
 export const getAllRooms = () => api.get("/api/rooms");
 
-export const getRoom = (roomId) => api.get(`/api/rooms/${roomId}`)
+export const getRoom = (roomId) => api.get(`/api/rooms/${roomId}`);
 
 // Intercepter
 
@@ -42,12 +42,9 @@ api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        await axios.get(
-            `${process.env.REACT_APP_API_URL}/api/refresh`,
-             {
-                 withCredentials: true,
-             }
-        );
+        await axios.get(`${process.env.REACT_APP_API_URL}/api/refresh`, {
+          withCredentials: true,
+        });
         return api.request(originalRequest);
       } catch (err) {
         console.log(err.message);
@@ -58,4 +55,3 @@ api.interceptors.response.use(
 );
 
 export default api;
- 
