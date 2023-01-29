@@ -13,12 +13,11 @@ export const useStateWithCallback = (initialState) => {
   }, []);
 
   useEffect(() => {
-    if(cbRef.current){
-        cbRef.current(state);
-        cbRef.current = null;
+    if (cbRef.current) {
+      cbRef.current(state);
+      cbRef.current = null;
     }
-  
-  }, [state])
-  
+  }, [state]);
+
   return [state, updateState];
 };
