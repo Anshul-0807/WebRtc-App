@@ -43,16 +43,13 @@ export const Navigation = () => {
           <Link to="/">
             <img
               className={styles.avatar}
-              src={user.avatar
-                ? user.avatar 
-                : "/imags/anime2.png"
-               }
+              src={user.avatar ? user.avatar : "/imags/anime2.png"}
               width="40"
               height="40"
               alt="avatar"
             />
           </Link>
-          
+
           <button className={styles.logoutButton} onClick={logoutUser}>
             <img src="/imags/logoutimg.png" alt="logout" />
           </button>
