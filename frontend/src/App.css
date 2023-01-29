@@ -1,5 +1,4 @@
 html {
-  
   font-size: 16px;
 }
 
@@ -93,7 +92,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-weight:normal;
+  font-weight: normal;
   -webkit-font-smoothing: antialiased;
 }
 /* HTML5 display-role reset for older browsers */
@@ -133,30 +132,27 @@ table {
   border-spacing: 0;
 }
 
-body{
-
-    background: #121212;
-    font-family: 'Nunito', sans-serif;
-    color: #fff;
-
+body {
+  background: #121212;
+  font-family: "Nunito", sans-serif;
+  color: #fff;
 }
-.container{
-
-    width: 1200px;
-    max-width: 90%;
-    margin: 0 auto;
+.container {
+  width: 1200px;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
-.cardWrapper{
+.cardWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 140px);
 }
 
-button{
+button {
   border: none;
- outline: none;
- cursor: pointer;
- font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
 }
