@@ -23,14 +23,13 @@ import { useSelector } from "react-redux";
 import { useLoadingWithRefresh } from "./hooks/useLoadingWithRefresh";
 import { Loader } from "./component/shared/Loader/Loader";
 
-
 function App() {
   // Call refresh end point
- 
+
   const { loading } = useLoadingWithRefresh();
 
   return loading ? (
-    <Loader message="Loading, please wait.."/>
+    <Loader message="Loading, please wait.." />
   ) : (
     // <div  className='App'>
 
@@ -54,13 +53,12 @@ function App() {
         </SemiProtectedRoutes>
 
         <ProtectedRoutes path="/rooms">
-          <Rooms/>
+          <Rooms />
         </ProtectedRoutes>
 
         <ProtectedRoutes path="/room/:id">
           <Room />
         </ProtectedRoutes>
-
       </Switch>
     </BrowserRouter>
   );
