@@ -1,27 +1,24 @@
 import React, { useState } from "react";
 import styles from "./AddRoomModal.module.css";
 import TextInput from "../shared/TextInput/TextInput";
-import {createRoom as create} from '../../http';
+import { createRoom as create } from "../../http";
 import { useHistory } from "react-router-dom";
 
-
 const AddRoomModal = ({ onClose }) => {
-
   const history = useHistory();
   const [roomType, setRoomType] = useState("open");
-  const [topic, setTopic] = useState('');
+  const [topic, setTopic] = useState("");
 
-  async function createRoom(){
-  // server call
-  try{
-    if(!topic) return;
-    const { data } = await create({topic, roomType });
-    history.push(`/room/${data.id}`);
-    
-  }catch(err){
-     console.log(err.message);
+  async function createRoom() {
+    // server call
+    try {
+      if (!topic) return;
+      const { data } = await create({ topic, roomType });
+      history.push(`/room/${data.id}`);
+    } catch (err) {
+      console.log(err.message);
+    }
   }
- }
 
   return (
     <div className={styles.modalMask}>
@@ -34,7 +31,7 @@ const AddRoomModal = ({ onClose }) => {
           <TextInput
             fullwidth="true"
             value={topic}
-            onChange ={(e) => setTopic(e.target.value)}
+            onChange={(e) => setTopic(e.target.value)}
           />
           <h2 className={styles.subHeading}>Room types</h2>
           <div className={styles.roomTypes}>
