@@ -7,12 +7,12 @@ export const Loader = ({ message }) => {
     <div className="cardWrapper">
       <Card>
         <svg
-        className={styles.spinner}
+          className={styles.spinner}
           xmlns="http://www.w3.org/2000/svg"
           width="42"
           height="42"
           fill="none"
-        > 
+        >
           <circle cx="21" cy="21" r="18" stroke="#C4C5C5" strokeWidth="4" />
           <path
             fill="#5453E0"
